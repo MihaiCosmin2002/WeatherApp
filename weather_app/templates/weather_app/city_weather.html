@@ -1,0 +1,59 @@
+{% if weather_data %}
+    <h1>
+        {{ weather_data.city }}
+    </h1>
+    {% if degrees == "Celsius" %}
+        <h2>
+            {{ weather_data.temperature_c }}°C
+        </h2>
+    {% endif %}
+    {% if degrees == "Fahrenheit" %}
+        <h2>
+            {{ weather_data.temperature_f }}°F
+        </h2>
+    {% endif %}
+    {% if degrees == "Kelvin" %}
+        <h2>
+            {{ weather_data.temperature_k }}°K
+        </h2>
+    {% endif %}
+    <p>
+        {{ weather_data.description }}
+    </p>
+    <img src="http://openweathermap.org/img/w/{{ weather_data.icon }}.png" alt="{{ weather_data.description }}">
+{% endif %}
+
+{% if daily_forecast != "no" %}
+    <h2>
+        {{ forecast_days }}-Day Forecast
+    </h2>
+    <div class="forecasts-container">
+        {% for forecast in daily_forecast %}
+            <div class="forecast" style="background-image: url('{{ forecast.image }}');">
+                <h3>
+                    {{ forecast.day }}
+                </h3>
+                {% if degrees == "Celsius" %}
+                    <p>
+                        {{ forecast.max_temp_c }}°C - {{ forecast.min_temp_c }}°C
+                    </p>
+                {% endif %}
+                {% if degrees == "Fahrenheit" %}
+                    <p>
+                        {{ forecast.max_temp_f }}°F - {{ forecast.min_temp_f }}°F
+                    </p>
+                {% endif %}
+                {% if degrees == "Kelvin" %}
+                    <p>
+                        {{ forecast.max_temp_k }}°K - {{ forecast.min_temp_k }}°K
+                    </p>
+                {% endif %}
+                <p>
+                   {{ forecast.description }}
+                </p>
+                <img src="http://openweathermap.org/img/w/{{ forecast.icon }}.png" alt="{{ forecast.description }}">
+            </div>
+        {% endfor %}
+    </div>
+
+{% endif %}

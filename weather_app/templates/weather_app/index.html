@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link rel="stylesheet" href="{% static 'stile.css' %}">
+</head>
+<body background="{{ what }}">
+    <form method="post">
+        {% csrf_token %}
+        <input type="text" name="City" placeholder="City">
+        <button type="submit">Get Weather</button>
+        <select name="Degrees">
+          <option value="Celsius">Celsius</option>
+          <option value="Fahrenheit">Fahrenheit</option>
+          <option value="Kelvin">Kelvin</option>
+        </select>
+        <select name="Forecast Days">
+          <option value="" disabled selected>Forecast Days</option>
+          <option value="1 Day">1 Day</option>
+          <option value="2 Day">2 Day</option>
+          <option value="3 Day">3 Day</option>
+          <option value="4 Day">4 Day</option>
+          <option value="5 Day">5 Day</option>
+          <option value="6 Day">6 Day</option>
+          <option value="7 Day">7 Day</option>
+          <option value="8 Day">8 Day</option>
+          <option value="No forecast">No forecast</option>
+        </select>
+    </form>
+
+    <div class="container">
+        {% if weather_data %}
+            <div class="city-container">
+                {% include 'weather_app/city_weather.html' with weather_data=weather_data  daily_forecast=daily_forecast %}
+            </div>
+        {% endif %}
+        {% if ERROR %}
+            <div class="ERROR">
+                {{ ERROR }}
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
